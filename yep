@@ -1,0 +1,58 @@
+Public Class Form1
+    Dim Now As Date
+    Dim CurrentHour = Hour(DateAndTime.Now())
+    Dim Working As Boolean
+    Dim Log(2, 5, 15) As String
+    Dim Employees = GetEmployees()
+    Dim i As Integer = 0
+
+    Public Function GetEmployees() As IEnumerable(Of Employee)
+        Return New List(Of Employee) From
+            {
+            New Employee("aa01"),
+            New Employee("aa02"),
+            New Employee("aa03"),
+            New Employee("aa04"),
+            New Employee("aa05"),
+            New Employee("ab11"),
+            New Employee("ab12"),
+            New Employee("ab13"),
+            New Employee("ab14"),
+            New Employee("ab15"),
+            New Employee("ac21"),
+            New Employee("ac22"),
+            New Employee("ac23"),
+            New Employee("ac24"),
+            New Employee("ac25")
+            }
+    End Function
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub BtnCheckIn_Click(sender As Object, e As EventArgs) Handles btnCheckIn.Click
+        For i = 0 To Employees.Length - 1
+            If txtEmpID.Text = Employees(i) Or Employees(i).Contains(txtEmpID.Text) Then
+                MsgBox("found")
+            Else
+                MsgBox("notfound")
+            End If
+        Next
+
+        If CurrentHour >= 0 And CurrentHour <= 23 And Working = False Then
+            Working = True
+            MsgBox("Working")
+        ElseIf CurrentHour >= 0 And CurrentHour <= 23 And Working = True Then
+            Working = False
+            MsgBox("not working")
+        End If
+    End Sub
+End Class
+
+Public Class Employee
+    Public Property ID As String
+    Public Sub New(ByVal EmpID As String)
+        ID = EmpID
+    End Sub
+End Class
